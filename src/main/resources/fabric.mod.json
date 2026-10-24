@@ -1,0 +1,21 @@
+{
+  "schemaVersion": 1,
+  "id": "backpackmod",
+  "version": "${version}",
+  "name": "Mochila",
+  "description": "Una mochila con su propio slot de equipamiento, que se ve en 3D en la espalda.",
+  "authors": ["Tu nombre"],
+  "license": "MIT",
+  "environment": "*",
+  "entrypoints": {
+    "main": ["com.backpackmod.BackpackMod"],
+    "client": ["com.backpackmod.client.BackpackClient"]
+  },
+  "mixins": ["backpackmod.mixins.json"],
+  "depends": {
+    "fabricloader": ">=0.19.5",
+    "minecraft": "~26.3",
+    "java": ">=25",
+    "fabric-api": "*"
+  }
+}
