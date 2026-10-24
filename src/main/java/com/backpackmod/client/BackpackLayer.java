@@ -10,7 +10,7 @@ import net.minecraft.client.model.geom.builders.CubeListBuilder;
 import net.minecraft.client.model.geom.builders.LayerDefinition;
 import net.minecraft.client.model.geom.builders.MeshDefinition;
 import net.minecraft.client.model.geom.builders.PartDefinition;
-import net.minecraft.client.model.geom.builders.PartPose;
+import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.renderer.SubmitNodeCollector;
 import net.minecraft.client.renderer.entity.RenderLayerParent;
@@ -62,7 +62,7 @@ public class BackpackLayer extends RenderLayer<AvatarRenderState, HumanoidModel<
 		poseStack.pushPose();
 		// Sigue al torso (se inclina cuando el jugador se agacha, por ejemplo).
 		this.getParentModel().body.translateAndRotate(poseStack);
-		collector.submitModelPart(this.bag, poseStack, RenderTypes.entityCutoutNoCull(TEXTURE),
+		collector.submitModelPart(this.bag, poseStack, RenderTypes.entityCutout(TEXTURE),
 				lightCoords, OverlayTexture.NO_OVERLAY, null);
 		poseStack.popPose();
 	}

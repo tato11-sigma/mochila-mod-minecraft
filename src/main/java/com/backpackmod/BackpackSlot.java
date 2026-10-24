@@ -7,7 +7,7 @@ import net.minecraft.world.item.ItemStack;
 public class BackpackSlot extends Slot {
 	public BackpackSlot(Container container, int x, int y) {
 		super(container, 0, x, y);
-		setBackground(BackpackMod.id("container/slot/backpack"));
+		// TODO: fondo del slot vacio (la funcion setBackground cambio en 26.3)
 	}
 
 	@Override

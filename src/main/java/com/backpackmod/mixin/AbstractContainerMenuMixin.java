@@ -13,7 +13,7 @@ import net.minecraft.core.NonNullList;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
-import net.minecraft.world.inventory.ClickType;
+import net.minecraft.world.inventory.ContainerInput;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 
@@ -28,8 +28,8 @@ public abstract class AbstractContainerMenuMixin {
 	public abstract ItemStack getCarried();
 
 	@Inject(method = "clicked", at = @At("HEAD"), cancellable = true)
-	private void backpackmod$openOnRightClick(int slotId, int button, ClickType clickType, Player player, CallbackInfo ci) {
-		if (clickType != ClickType.PICKUP || button != 1 || slotId < 0 || slotId >= this.slots.size()) {
+	private void backpackmod$openOnRightClick(int slotId, int button, ContainerInput clickType, Player player, CallbackInfo ci) {
+		if (clickType != ContainerInput.PICKUP || button != 1 || slotId < 0 || slotId >= this.slots.size()) {
 			return;
 		}
 		Slot slot = this.slots.get(slotId);
