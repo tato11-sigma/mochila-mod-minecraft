@@ -15,10 +15,32 @@ jobs:
         with:
           gradle-version: current
       - run: gradle build --no-daemon
+      - name: Volcar API de Minecraft
+        if: always()
+        run: |
+          mkdir -p apiinfo
+          find /home/runner -name 'minecraft*.jar' -size +5M 2>/dev/null | grep -v sources > apiinfo/jars.txt || true
+          for J in $(cat apiinfo/jars.txt); do
+            unzip -l "$J" | awk '{print $4}' | grep '\.class$' > /tmp/classes.txt || true
+            if grep -q 'net/minecraft/world/inventory/Slot.class' /tmp/classes.txt; then
+              echo "JAR: $J" > apiinfo/api.txt
+              for N in Slot RenderTypes EntityType EntityTypes PartPose ContainerInput AvatarRenderer AvatarRenderState RenderLayer HumanoidModel SubmitNodeCollector ModelPart OverlayTexture; do
+                for C in $(grep -E "/$N\.class$" /tmp/classes.txt | sed 's/\.class$//'); do
+                  echo "=== $C" >> apiinfo/api.txt
+                  javap -public -cp "$J" "$(echo $C | tr / .)" >> apiinfo/api.txt 2>&1 || true
+                done
+              done
+              break
+            fi
+          done
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: apiinfo
+          path: apiinfo/
       - uses: actions/upload-artifact@v4
         with:
           name: backpackmod-jar
           path: |
             build/libs/*.jar
             !build/libs/*-sources.jar
-          
